@@ -17,10 +17,13 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
+  spec.metadata['yard.run'] = 'yri'
+
   spec.add_dependency 'jwt',       '~> 1.5'
   spec.add_dependency 'net-http2', '~> 0.14.1'
 
   spec.add_development_dependency 'bundler', '~> 1.11'
   spec.add_development_dependency 'rake',    '~> 10.0'
   spec.add_development_dependency 'rspec',   '~> 3.0'
+  spec.add_development_dependency 'yard',    '~> 0.9.8'
 end
