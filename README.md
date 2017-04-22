@@ -51,6 +51,59 @@ This is fully supported by APNS.
 
 The default value is ```1```.
 
+---
+
+Next, you'll want to send a notification. You can create a notification like this:
+
+```ruby
+notification = Gravel::APNS::Notification.new
+notification.title = 'Hello, World!'
+notification.body = 'How are you today?'
+notification.sound = :default
+notification.device_token = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+```
+
+Finally, you can send the notification:
+
+```ruby
+apns.send(notification) do |success, response|
+  puts "Success: #{success}, Response: #{response}"
+end
+```
+
+The requests are all asynchronous, so if you need to wait for them to finish
+you can call the ```wait``` method:
+
+```ruby
+apns.wait
+```
+
+This will block the thread until all requests have completed.
+
+---
+
+If you're sending notifications to lots of devices, there's a helper method
+that allows you to quickly generate the same notification for each device token:
+
+```ruby
+tokens = [
+  'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+  'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'
+]
+
+notifications = notification.for_device_tokens(*tokens)
+```
+
+Then you can just loop over each notification and deliver it:
+
+```ruby
+notifications.each do |notification|
+  apns.send(notification) do |success, result|
+    puts "Success: #{success}, Response: #{response}"
+  end
+end
+```
+
 ## Development
 
 After checking out the repo, run `rake spec` to run the tests.
