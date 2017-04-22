@@ -39,7 +39,7 @@ module Gravel
           raise 'The key must be an elliptic curve key.'
         end
 
-        unless key.private?
+        unless key.private_key?
           raise 'The key must contain a private key.'
         end
 
