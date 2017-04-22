@@ -135,6 +135,10 @@ module Gravel
     # @return [Boolean] Whether or not the notification was sent.
     #
     def send(notification, &block)
+      if @workers.nil? || @workers.empty?
+        raise "There aren't any workers to process this notification!"
+      end
+
       @queue.push([notification, block])
 
       nil
@@ -148,6 +152,23 @@ module Gravel
       until @queue.empty? && threads.all? { |t| t[:processing] == false }
         # Waiting for the threads to finish ...
       end
+    end
+
+    # Close all clients and terminate all workers.
+    #
+    def close
+      @queue.clear
+
+      if @workers.is_a?(Array)
+        @workers.each do |payload|
+          payload[:thread].kill
+          payload[:client].close
+        end
+
+        @workers = nil
+      end
+
+      nil
     end
 
     private
