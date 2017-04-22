@@ -114,6 +114,20 @@ module Gravel
         self.uuid = SecureRandom.uuid
       end
 
+      # Quickly create the same notification for multiple device tokens.
+      #
+      # @param tokens [Splat] An array of device tokens.
+      # @return [Array] An array of notifications.
+      #
+      def for_device_tokens(*tokens)
+        tokens.map do |token|
+          notification = self.dup
+          notification.uuid = SecureRandom.uuid
+          notification.device_token = token
+          notification
+        end
+      end
+
       # Generate the APNS payload.
       #
       # @return [Hash] The APNS payload.
