@@ -188,7 +188,7 @@ module Gravel
       end
 
       unless notification.device_token
-        block.call(false)
+        block.call(false) if block_given?
         return
       end
 
@@ -218,7 +218,7 @@ module Gravel
 
       response = client.call(:post, path, headers: headers, body: body)
 
-      block.call(response.ok?, response)
+      block.call(response.ok?, response) if block_given?
     end
   end
 end
