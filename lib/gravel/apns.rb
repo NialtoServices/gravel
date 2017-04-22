@@ -136,6 +136,8 @@ module Gravel
     #
     def send(notification, &block)
       @queue.push([notification, block])
+
+      nil
     end
 
     # Wait for all threads to finish processing.
