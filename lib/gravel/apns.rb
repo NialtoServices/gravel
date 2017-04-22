@@ -143,7 +143,7 @@ module Gravel
     # Wait for all threads to finish processing.
     #
     def wait
-      threads = @workers.map { |worker| worker[:thread] }
+      threads = @workers.map { |w| w[:thread] }
 
       until @queue.empty? && threads.all? { |t| t[:processing] == false }
         # Waiting for the threads to finish ...
