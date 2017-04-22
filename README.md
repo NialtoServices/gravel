@@ -47,8 +47,6 @@ This tells Gravel how many connections it should open to APNS.
 
 One notification can be sent at a time through a connection, so opening multiple connections will improve the speed at which you can crunch through a notification task.
 
-This is fully supported by APNS.
-
 The default value is ```1```.
 
 ---
@@ -103,6 +101,13 @@ notifications.each do |notification|
   end
 end
 ```
+
+---
+
+You should keep the APNS instance in memory for as long a possible, this
+keeps the connection(s) to APNS open.
+
+See [Communicating with APNs - Best Practices for Managing Connections](https://developer.apple.com/library/content/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/CommunicatingwithAPNs.html#//apple_ref/doc/uid/TP40008194-CH11-SW8) for more info on this.
 
 ## Development
 
